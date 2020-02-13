@@ -1,0 +1,36 @@
+version: '3'
+services: 
+    db:
+        image: mysql:5.7
+        ports:
+            - "3306:3306"
+        expose:
+            - "3306"
+        networks: 
+            - docker_mevn
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: mevn
+            MYSQL_USER: tobil
+            MYSQL_PASSWORD: root
+  
+    app:
+        build: .
+        container_name: app
+
+        networks: 
+            - docker_mevn
+        ports:
+            - "3001:3000"
+        
+        environment:
+            DB_HOST: db
+            DB_USER: root
+            DB_PASS: password
+            DB_PORT: "3306"
+            DB_NAME: mevn
+
+
+networks: 
+    docker_mevn:
+        driver: bridge

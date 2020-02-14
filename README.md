@@ -208,6 +208,9 @@ export default {
         agar terminal tidak stack di command docker, gunakan dash [-] d atau -d, sehingga command yang dijalankan menjadi :
         docker-compose up -d
         ```
+- untuk menghindari hilangnya data saat docker dimatikan/restart
+    - keyword : docker persistant volume
+    - [link](https://docs.docker.com/storage/volumes/)
 
 
 

@@ -15,22 +15,19 @@ services:
             MYSQL_PASSWORD: root
   
     app:
-        build: .
-        container_name: app
-
+        image: tobil/todoapp:v1.0.1
         networks: 
             - docker_mevn
         ports:
-            - "3001:3000"
-        
+            - "3000:3000"
+        expose: 
+            - "3000"
         environment:
             DB_HOST: db
             DB_USER: root
             DB_PASS: password
             DB_PORT: "3306"
             DB_NAME: mevn
-
-
 networks: 
     docker_mevn:
         driver: bridge

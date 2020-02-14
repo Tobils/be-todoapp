@@ -155,13 +155,59 @@ export default {
 </script>
 ```
 
+- docker compose
+    - docker compose digunakan untuk running lebih dari 1 images
+        ```yml
+        <!-- file docker-compose.yml -->
+        version: '3'
+        services: 
+            db:
+                image: mysql:5.7
+                ports:
+                    - "3306:3306"
+                expose:
+                    - "3306"
+                networks: 
+                    - docker_mevn
+                environment:
+                    MYSQL_ROOT_PASSWORD: password
+                    MYSQL_DATABASE: mevn
+                    MYSQL_USER: tobil
+                    MYSQL_PASSWORD: root
+        
+            app:
+                image: tobil/todoapp:v1.0.1
+                networks: 
+                    - docker_mevn
+                ports:
+                    - "3000:3000"
+                expose: 
+                    - "3000"
+                environment:
+                    DB_HOST: db
+                    DB_USER: root
+                    DB_PASS: password
+                    DB_PORT: "3306"
+                    DB_NAME: mevn
+        networks: 
+            docker_mevn:
+                driver: bridge
+        ```
+
 - command untuk menjalankan 2 image dalam waktu bersmaan
-    - `docker-compose up --build`
+    - build image : `sudo docker image build -t todoapp:v1.0.1 .`
+    - docker compose : `docker-compose up --build`
+    - tagging image ke repo : `sudo docker tag todoapp:v1.0.1 tobil/todoapp:v1.0.1`
+    - push new docker image : `sudo docker push tobil/todoapp:v1.0.1`
 
-
-
-
-
+- menjalankan container di hosting
+    - run todoapp : `sudo docker container run --name be_todoapp -p 3001:3000 tobil/todoapp:v1.0.1`
+    - tambahan
+        ```
+        dengan menjalankan docker-compose, kita sudah otomatis run image untuk mysql dan app sehingga tidak perlu running app terpisah lagi.
+        agar terminal tidak stack di command docker, gunakan dash [-] d atau -d, sehingga command yang dijalankan menjadi :
+        docker-compose up -d
+        ```
 
 
 

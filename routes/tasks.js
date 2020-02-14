@@ -5,6 +5,7 @@ var Task = require("../model/Task");
 
 // GET all task
 router.get("/tasks", (req, res, next) => {
+    console.log("/api/tasks");
     Task.findAll()
         .then(tasks => {
             res.json(tasks)
@@ -13,6 +14,7 @@ router.get("/tasks", (req, res, next) => {
             res.send("error : " + err)
         })
 })
+
 
 // Add task
 router.post("/task", (req, res, next) => {
@@ -31,6 +33,7 @@ router.post("/task", (req, res, next) => {
             })
     }
 })
+
 
 // Delete task
 router.delete("/task/:id", (req, res, next) => {
